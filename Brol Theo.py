@@ -9,8 +9,10 @@ alpha = 0.0    # Angle d'inclinaison (tan(alpha) = h / d)
  
 # Définition de la forme de la piste v(u) et de ses dérivées
 # Equation de l'éllipse avec les foyers a et b
-a = 0.0 # a définir (L/2)
-b = 0.0 # a définir (sqrt (L² - f²))
+f=sqrt(d**2+h**2)
+L=1.01*f
+a= L/2
+b= sqrt(L**2-f**2)/2
  
 def track_v(u):
     u_clipped = np.clip(u, -a, a)
