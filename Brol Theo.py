@@ -6,11 +6,13 @@ g = 9.81       # Accélération de la pesanteur
 m = 1.0        # Masse
 fd = 0.4       # Coefficient de frottement
 alpha = 0.0    # Angle d'inclinaison (tan(alpha) = h / d)
- 
+d = 15         # distance horizontale entre les 2 points d'accroches
+h = -2.5         # différence de hauteur entre les 2 points d'accroches
+
 # Définition de la forme de la piste v(u) et de ses dérivées
 # Equation de l'éllipse avec les foyers a et b
-f=sqrt(d**2+h**2)
-L=1.01*f
+f=sqrt(d**2+h**2)      # Distance entre les 2 points d'accroches     
+L=1.01*f               # Longueur du câble 
 a= L/2
 b= sqrt(L**2-f**2)/2
  
