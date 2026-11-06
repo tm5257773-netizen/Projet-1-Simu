@@ -11,10 +11,10 @@ h = -2.5         # différence de hauteur entre les 2 points d'accroches
 
 # Définition de la forme de la piste v(u) et de ses dérivées
 # Equation de l'éllipse avec les foyers a et b
-f=sqrt(d**2+h**2)      # Distance entre les 2 points d'accroches     
+f=np.sqrt(d**2+h**2)      # Distance entre les 2 points d'accroches     
 L=1.01*f               # Longueur du câble 
 a= L/2
-b= sqrt(L**2-f**2)/2
+b= np.sqrt(L**2-f**2)/2
  
 def track_v(u):
     u_clipped = np.clip(u, -a, a)
