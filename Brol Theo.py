@@ -17,17 +17,17 @@ def track_v(u):
     return b * np.sqrt(1.0 - (u_clipped**2))
  
 def track_v_prime(u):
-	v_val = track_v(u)
-	if v_val == 0:
-		return 0.0
+    v_val = track_v(u)
+    if v_val == 0:
+        return 0.0
     return - (u * b**2) / (v_val * a**2)
  
 def track_v_double_prime(u):
-	v_val = track_v(u)
-	vp_pal = track_v_prime(u)
-	if v_val == 0:
-		return 0.0
-	return - (b**2 / a**2) * (v_val - u * vp_val) / (v_val**2)
+    v_val = track_v(u)
+    vp_val = track_v_prime(u)
+    if v_val == 0:
+        return 0.0
+    return - (b**2 / a**2) * (v_val - u * vp_val) / (v_val**2)
  
 # Paramètres de simulation
 h = 0.001       # Pas de temps (dt)
