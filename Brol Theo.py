@@ -13,11 +13,11 @@ a = 0.0 # a définir (L/2)
 b = 0.0 # a définir (sqrt (L² - f²))
  
 def track_v(u):
-u_clipped = np.clip(u, -a, a)
+    u_clipped = np.clip(u, -a, a)
     return b * np.sqrt(1.0 - (u_clipped**2))
  
 def track_v_prime(u):
-    return
+    return 
  
 def track_v_double_prime(u):
     return -0.5 * np.cos(u)
