@@ -50,8 +50,8 @@ def acceleration_u(u_current, w_current):
     
         # Termes de l'équation
     terme_courbure = (vp * vpp / (1.0 + vp**2)) * (w_current**2)
-    terme_frottement = (fd / m) * np.sqrt(1.0 + vp**2) * w_current
-    terme_gravite = g * (np.sin(alpha) + vp * np.cos(alpha)) / np.sqrt(1.0 + vp**2)
+    terme_frottement = (fd / m) * w_current
+    terme_gravite = g * (np.sin(alpha) + vp * np.cos(alpha)) / (1.0 + vp**2)
     
     # Équation isolant u_ddot (ou ä)
     u_ddot = -terme_courbure - terme_frottement - terme_gravite
