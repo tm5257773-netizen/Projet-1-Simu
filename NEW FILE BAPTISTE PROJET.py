@@ -9,7 +9,7 @@ H = -2.75
 d = 15
 alpha = np.arctan(H/d)
 f = np.sqrt(H**2 + d**2)
-L = 1.01 * f
+L = 15.5
 
 # Définition de la forme de la piste v(u) et de ses dérivées
 a = L/2
