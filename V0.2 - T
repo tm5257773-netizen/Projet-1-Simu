@@ -1,0 +1,71 @@
+import numpy as np
+import matplotlib.pyplot as plt
+ 
+# Paramètres physiques
+g = 9.81       # Accélération de la pesanteur
+m = 1.0        # Masse
+fd = 0.4       # Coefficient de frottement
+alpha = 0.0    # Angle d'inclinaison
+ 
+# Paramètres géométriques du câble
+L = 10.0       # Longueur totale du câble L
+f_dist = 8.0   # Distance f entre les points d'ancrage
+ 
+# Définition des demi-axes de l'ellipse selon l'annexe H2
+a = L / 2.0
+b = np.sqrt(L**2 - f_dist**2) / 2.0
+ 
+def track_v(u):
+    u_clipped = np.clip(u, -a + 1e-9, a - 1e-9)
+    return -b * np.sqrt(1.0 - (u_clipped**2) / (a**2))
+ 
+def track_v_prime(u):
+    u_clipped = np.clip(u, -a + 1e-9, a - 1e-9)
+    term = 1.0 - (u_clipped**2) / (a**2)
+    return (b / (a**2)) * u_clipped / np.sqrt(term)
+ 
+def track_v_double_prime(u):
+    u_clipped = np.clip(u, -a + 1e-9, a - 1e-9)
+    term = 1.0 - (u_clipped**2) / (a**2)
+    return (b / (a**2)) * (term ** (-1.5))
+ 
+# Paramètres de simulation
+h = 0.001       # Pas de temps (dt)
+t_max = 30.0   # Temps total
+n_steps = int(t_max / h)
+ 
+# Initialisation des tableaux
+t = np.linspace(0, t_max, n_steps)
+u = np.zeros(n_steps)  
+w = np.zeros(n_steps)  
+ 
+# Conditions initiales (lâché avec un léger décalage en u pour initier le mouvement)
+u[0] = 1.0     
+w[0] = 0.0     
+ 
+# Fonction d'accélération (u_ddot) basée sur l'équation de l'annexe H2
+def acceleration_u(u_current, w_current):
+    vp = track_v_prime(u_current)
+    vpp = track_v_double_prime(u_current)
+    
+    terme_courbure = (vp * vpp / (1.0 + vp**2)) * (w_current**2)
+    terme_frottement = (fd / m) * w_current
+    terme_gravite = g * (np.sin(alpha) + vp * np.cos(alpha)) / (1.0 + vp**2)
+    
+    u_ddot = -terme_courbure - terme_frottement - terme_gravite
+    return u_ddot
+ 
+# Boucle d'intégration numérique (Méthode d'Euler)
+for i in range(n_steps - 1):
+    a_u = acceleration_u(u[i], w[i])
+    u[i + 1] = u[i] + w[i] * h
+    w[i + 1] = w[i] + a_u * h
+ 
+y = track_v(u)
+ 
+# Affichage des résultats
+plt.plot(t, u, label="Position u(t)")
+plt.plot(t, w, label="Vitesse u_dot(t)")
+plt.xlabel("Temps (s)")
+plt.legend()
+plt.show()
