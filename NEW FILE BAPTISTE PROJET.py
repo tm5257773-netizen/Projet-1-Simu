@@ -83,23 +83,18 @@ x = u * np.cos(alpha) - v * np.sin(alpha)
 y = u * np.sin(alpha) + v * np.cos(alpha)
 
 # Affichage de la trajectoire
-plt.figure()
-plt.plot(x, y, label="Trajectoire du téléphérique")
-plt.xlabel("Position horizontale x (m)")
-plt.ylabel("Position verticale y (m)")
-plt.title("Trajectoire du téléphérique")
-plt.axis("equal")
-plt.grid()
-plt.legend()
-plt.show()
+fig, axd = plt.subplot_mosaic([['speed', 'speed'],
+                               ['pos',   'pos'],
+                               ['energy','energy']], layout='constrained')
 
-# Affichage de la position et de la vitesse
-plt.figure()
-plt.plot(t, u, label="Position u(t)")
-plt.plot(t, w, label="Vitesse u_dot(t)")
-plt.xlabel("Temps (s)")
-plt.title("Mouvement du téléphérique")
-plt.grid()
-plt.legend()
-plt.show()
+axd['speed'].plot(t, w, label="Vitesse du téléphérique")
+axd['speed'].set_xlabel("Temps [s]")
+axd['speed'].set_ylabel("Vitesse [m/s]")
+axd['speed'].set_title("Vitesse du téléphérique")
 
+axd['pos'].plot(x, y, label="Positions du téléphérique")
+axd['pos'].set_xlabel("Position horizontale x [m]")
+axd['pos'].set_ylabel("Position verticale y [m]")
+axd['pos'].set_title("Positions du téléphérique")
+
+plt.show()
