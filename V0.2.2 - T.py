@@ -82,10 +82,15 @@ v = track_v(u)
 x = u * np.cos(alpha) - v * np.sin(alpha)
 y = u * np.sin(alpha) + v * np.cos(alpha)
 
+# Calcul des énergies
+e_p = m * g * (y - np.min(y))
+e_c = m * w**2 / 2
+e_t = e_p + e_c
+
 # Affichage de la trajectoire
-fig, axd = plt.subplot_mosaic([['speed', 'speed'],
-                               ['pos',   'pos'],
-                               ['energy','energy']], layout='constrained')
+fig, axd = plt.subplot_mosaic([['speed'],
+                               ['pos'],
+                               ['energy']], layout='constrained', figsize=(8, 9))
 
 axd['speed'].plot(t, w, label="Vitesse du téléphérique")
 axd['speed'].set_xlabel("Temps [s]")
@@ -96,5 +101,14 @@ axd['pos'].plot(x, y, label="Positions du téléphérique")
 axd['pos'].set_xlabel("Position horizontale x [m]")
 axd['pos'].set_ylabel("Position verticale y [m]")
 axd['pos'].set_title("Positions du téléphérique")
+
+axd['energy'].plot(t, e_c, label="Energie cinétique")
+axd['energy'].plot(t, e_p, label="Energie potentielle")
+axd['energy'].plot(t, e_t, label="Energie totale")
+
+axd['energy'].set_xlabel("Temps [s]")
+axd['energy'].set_ylabel("Energie [J]")
+axd['energy'].set_title("Energie du téléphérique")
+axd['energy'].legend()
 
 plt.show()
